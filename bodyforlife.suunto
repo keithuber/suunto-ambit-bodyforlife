@@ -1,0 +1,52 @@
+/* While in sport mode do this once per second 
+Show minute interval effort percentage for twenty minute workout as follows 
+50,50,60,70,80,90,60,70,80,90,60,70,80,90,60,70,80,90,100,50 */
+prefix="BFL";
+postfix="%";
+BFLMINUTE = SUUNTO_LAP_DURATION/60;
+if ( (BFLMINUTE < 2 ) || 
+  ((BFLMINUTE >= 19) && (BFLMINUTE < 20 ))
+  ){
+RESULT=50; 
+}
+else if ( ((BFLMINUTE >= 2) && (BFLMINUTE < 3 )) || 
+  ((BFLMINUTE >= 6) && (BFLMINUTE < 7 )) || 
+  ((BFLMINUTE >= 10) && (BFLMINUTE < 11 )) || 
+  ((BFLMINUTE >= 14) && (BFLMINUTE < 15 ))
+  ){
+RESULT=60; 
+}
+else if ( ((BFLMINUTE >= 3) && (BFLMINUTE < 4 )) || 
+  ((BFLMINUTE >= 7) && (BFLMINUTE < 8 )) || 
+  ((BFLMINUTE >= 11) && (BFLMINUTE < 12 )) || 
+  ((BFLMINUTE >= 15) && (BFLMINUTE < 16 ))
+  ){
+RESULT=70; 
+}
+else if ( ((BFLMINUTE >= 4) && (BFLMINUTE < 5 )) || 
+  ((BFLMINUTE >= 8) && (BFLMINUTE < 9 )) || 
+  ((BFLMINUTE >= 12) && (BFLMINUTE < 13 )) || 
+  ((BFLMINUTE >= 16) && (BFLMINUTE < 17 ))
+  ){
+RESULT=80; 
+}
+else if ( ((BFLMINUTE >= 5) && (BFLMINUTE < 6 )) || 
+  ((BFLMINUTE >= 9) && (BFLMINUTE < 10 )) || 
+  ((BFLMINUTE >= 13) && (BFLMINUTE < 14 )) || 
+  ((BFLMINUTE >= 17) && (BFLMINUTE < 18 ))
+  ){
+RESULT=90; 
+}
+else if ((BFLMINUTE >= 18) && (BFLMINUTE < 19 )) 
+{
+  RESULT=100; 
+}
+ 
+/* Beep every time the effort changes (i.e. on whole minutes between 2 and 20) */
+if (Suunto.mod(BFLMINUTE,1) == 0 )
+{
+    if (( BFLMINUTE > 1) && (BFLMINUTE < 21 ))
+    {
+    	Suunto.alarmBeep();
+    }
+}
